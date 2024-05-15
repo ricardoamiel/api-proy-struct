@@ -1,0 +1,43 @@
+ name: "my app"
+
+ services:
+   citas:
+     build: ./backend/citas
+     image: ricardoamiel/citas
+     ports:
+       - 8800:8800
+     healtcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8800/citas"]
+      interval: 5s
+      timeout: 10s
+      retries: 1
+   medicos:
+     build: ./backend/medicos
+     image: ricardoamiel/medicos
+     ports:
+       - 8000:8000
+      healtcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8000/medicos"]
+        interval: 5s
+        timeout: 10s
+        retries: 1
+   pacientes:
+      build: ./backend/pacientes
+      image: ricardoamiel/pacientes
+      ports:
+        - 8080:8080
+      healtcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8080/pacientes"]
+        interval: 5s
+        timeout: 10s
+        retries: 1
+    frontend:
+      build: ./frontend
+      image: ricardoamiel/frontend
+      ports:
+        - 3000:3000
+      healtcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:3000"]
+        interval: 5s
+        timeout: 10s
+        retries: 1
